@@ -1,3 +1,5 @@
+// const { json } = require("express");
+
 // SELECT THE INPUTS FIELDS
 let title = document.querySelector(".title");
 const activitydiv = document.querySelector(".activ");
@@ -13,6 +15,8 @@ const validate = () => {
   if (!title.value || !description.value || !date.value) {
     alert("Fill all the fields");
     return false;
+  } else {
+    postAct();
   }
 };
 // CLEAR SCREEN AFTER DATA POSTING
@@ -23,15 +27,12 @@ const clearScreen = () => {
 // ADD EVENT LISTENER TO THE ADD BUTTON
 addBtn.addEventListener("click", () => {
   validate();
+  // postAct();
   clearScreen();
   //   alert("clicked");
 });
 // MAKE AN OBJECT FOR THE INPUT DATA
-const inpData = {
-  title: title.value,
-  description: description.value,
-  dueDate: date.value,
-};
+
 // ICON DELETE
 const iconDel = (id) => {
   console.log(id);
@@ -39,7 +40,8 @@ const iconDel = (id) => {
 };
 //  DELETE BUTTON FUNCTION
 const buttonDel = (id) => {
-  console.log(id);
+  deleteAct(id);
+  // console.log(id);
 };
 
 // GET DATA FROM THE DB
@@ -64,5 +66,39 @@ const getActivities = () => {
       });
     });
 };
+// setInterval(getActivities, 3000);
 getActivities();
-// ADD EVENT LISTENER TO THE ICON
+
+//POST ACTIVITIES TO THE DB
+const postAct = async () => {
+  const inpData = {
+    title: title.value,
+    description: description.value,
+    duedate: date.value,
+  };
+  fetch("http://localhost:2280/activity", {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    body: JSON.stringify({ ...inpData }),
+  })
+    .then((response) => response.json())
+    .then((msg) => {
+      console.log(msg);
+    });
+};
+// CREATE A DELETE FUNCTION
+const deleteAct = (id) => {
+  console.log(id);
+  fetch("http://localhost:2280/activity/" + id, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "DELETE",
+  })
+    .then((res) => res.json())
+    .then((err) => {
+      console.log(err);
+    });
+};
