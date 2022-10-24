@@ -1,0 +1,13 @@
+GET http://localhost:2280/activities
+
+###
+POST http://localhost:2280/activity
+Content-Type: "application/json"
+
+{
+    "title": "gfdert",
+    "description": "234efv",
+    "duedate": "1234"
+}
+###
+DELETE http://localhost:2280/activity/e3db054d-1edc-4b7a-b7c2-a6c6febf4de9
