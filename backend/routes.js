@@ -6,4 +6,4 @@ router.get("/activities", controllers.getUser);
 router.post("/activity", controllers.postActivity);
 router.delete("/activity/:id", controllers.deleteActivity);
 
-module.exports = { router };
+module.exports = router;
